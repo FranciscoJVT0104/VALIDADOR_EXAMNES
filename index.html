@@ -94,6 +94,14 @@
         button:hover {
             background: rgb(0, 207, 0);
         }
+
+        #reset {
+            background: rgb(255, 89, 89);
+        }
+
+        #reset:hover {
+            background: rgb(255, 0, 0);
+        }
     </style>
 </head>
 
@@ -106,8 +114,10 @@
         <div class="section">
             <h3>📘 Examen Parcial</h3>
             <input type="file" id="fileParcial" accept=".txt"><br>
-            <button onclick="procesar('parcial')"><i class="fa-solid fa-gear fa-lg" style="color: #ffffff;"></i> Procesar Parcial</button>
-            <button onclick="descargar('parcial')"><i class="fa-solid fa-download fa-lg" style="color: #ffffff;"></i> Descargar Parcial</button>
+            <button onclick="procesar('parcial')"><i class="fa-solid fa-gear fa-lg" style="color: #ffffff;"></i>
+                Procesar Parcial</button>
+            <button onclick="descargar('parcial')"><i class="fa-solid fa-download fa-lg" style="color: #ffffff;"></i>
+                Descargar Parcial</button>
             <div class="stats" id="statsParcial"></div>
             <textarea id="outputParcial"></textarea>
         </div>
@@ -118,7 +128,8 @@
             <input type="file" id="fileFinal" accept=".txt"><br>
             <button onclick="procesar('final')"><i class="fa-solid fa-gear fa-lg" style="color: #ffffff;"></i> Procesar
                 Final</button>
-            <button onclick="descargar('final')"><i class="fa-solid fa-download fa-lg" style="color: #ffffff;"></i> Descargar Final</button>
+            <button onclick="descargar('final')"><i class="fa-solid fa-download fa-lg" style="color: #ffffff;"></i>
+                Descargar Final</button>
             <div class="stats" id="statsFinal"></div>
             <textarea id="outputFinal"></textarea>
         </div>
@@ -126,11 +137,19 @@
         <!-- UNION -->
         <div class="section final">
             <h3>🔥 Unión Parcial + Final</h3>
-            <button onclick="unir()"><i class="fa-solid fa-code-compare fa-lg" style="color: #ffffff;"></i> Unir y Eliminar Duplicados</button>
-            <button onclick="descargar('union')"><i class="fa-solid fa-download fa-lg" style="color: #ffffff;"></i> Descargar TXT Final</button>
+            <button onclick="unir()"><i class="fa-solid fa-code-compare fa-lg" style="color: #ffffff;"></i> Unir y
+                Eliminar Duplicados</button>
+            <button onclick="descargar('union')"><i class="fa-solid fa-download fa-lg" style="color: #ffffff;"></i>
+                Descargar TXT Final</button>
             <div class="stats" id="statsUnion"></div>
             <textarea id="outputUnion"></textarea>
         </div>
+
+        <!-- RESET -->
+        <div style="text-align:center">
+            <button id="reset" class="reset" onclick="limpiarTodo()">🧹 Limpiar Todo</button>
+        </div>
+
     </div>
 
     <script>
@@ -187,7 +206,6 @@
                 if (lineas.length < 2) return;
 
                 const enunciado = normalizar(lineas[0]);
-
                 const opciones = lineas
                     .filter(l => /^[A-Z]\./i.test(l))
                     .map(l => normalizar(l))
@@ -235,10 +253,32 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
+
+        function limpiarTodo() {
+            // Limpiar memoria
+            data.parcial = "";
+            data.final = "";
+            data.union = "";
+
+            // Limpiar inputs
+            document.getElementById("fileParcial").value = "";
+            document.getElementById("fileFinal").value = "";
+
+            // Limpiar textareas
+            document.getElementById("outputParcial").value = "";
+            document.getElementById("outputFinal").value = "";
+            document.getElementById("outputUnion").value = "";
+
+            // Limpiar estadísticas
+            document.getElementById("statsParcial").innerText = "";
+            document.getElementById("statsFinal").innerText = "";
+            document.getElementById("statsUnion").innerText = "";
+        }
+
         function cap(t) {
             return t.charAt(0).toUpperCase() + t.slice(1);
         }
     </script>
-</body>
 
+</body>
 </html>
