@@ -1,194 +1,244 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>Procesador Aiken Normalizado</title>
 
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background: #eef2f5;
-    padding: 20px;
-}
-.container {
-    background: #fff;
-    max-width: 950px;
-    margin: auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 12px rgba(0,0,0,0.1);
-}
-.section {
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 6px;
-}
-h2, h3 {
-    text-align: center;
-}
-textarea {
-    width: 100%;
-    height: 180px;
-    margin-top: 10px;
-}
-button {
-    padding: 8px 15px;
-    margin: 5px;
-    cursor: pointer;
-}
-.stats {
-    font-weight: bold;
-    margin-top: 8px;
-}
-.final {
-    background: #f7f9fc;
-}
-</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Procesador Aiken Normalizado</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f5;
+            padding: 20px;
+        }
+
+        .container {
+            background: #fff;
+            max-width: 950px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+
+        h2,
+        h3 {
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .stats {
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .final {
+            background: #f7f9fc;
+        }
+
+        #fileParcial::file-selector-button {
+            background-color: rgb(0, 0, 255);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #fileParcial::file-selector-button:hover {
+            background-color: rgb(0, 204, 255);
+        }
+
+        #fileFinal::file-selector-button {
+            background-color: rgb(0, 0, 255);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #fileFinal::file-selector-button:hover {
+            background-color: rgb(0, 158, 197);
+        }
+
+        button {
+            margin: 8px;
+            padding: 10px 18px;
+            background: rgb(0, 101, 0);
+            border: none;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: rgb(0, 207, 0);
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
-    <h2>Procesador Aiken Normalizado</h2>
+    <div class="container">
+        <h2>EXAMEN / Aiken</h2>
 
-    <!-- PARCIAL -->
-    <div class="section">
-        <h3>📘 Examen Parcial</h3>
-        <input type="file" id="fileParcial" accept=".txt"><br>
-        <button onclick="procesar('parcial')">Procesar Parcial</button>
-        <button onclick="descargar('parcial')">Descargar Parcial</button>
-        <div class="stats" id="statsParcial"></div>
-        <textarea id="outputParcial"></textarea>
+        <!-- PARCIAL -->
+        <div class="section">
+            <h3>📘 Examen Parcial</h3>
+            <input type="file" id="fileParcial" accept=".txt"><br>
+            <button onclick="procesar('parcial')"><i class="fa-solid fa-gear fa-lg" style="color: #ffffff;"></i> Procesar Parcial</button>
+            <button onclick="descargar('parcial')"><i class="fa-solid fa-download fa-lg" style="color: #ffffff;"></i> Descargar Parcial</button>
+            <div class="stats" id="statsParcial"></div>
+            <textarea id="outputParcial"></textarea>
+        </div>
+
+        <!-- FINAL -->
+        <div class="section">
+            <h3>📕 Examen Final</h3>
+            <input type="file" id="fileFinal" accept=".txt"><br>
+            <button onclick="procesar('final')"><i class="fa-solid fa-gear fa-lg" style="color: #ffffff;"></i> Procesar
+                Final</button>
+            <button onclick="descargar('final')"><i class="fa-solid fa-download fa-lg" style="color: #ffffff;"></i> Descargar Final</button>
+            <div class="stats" id="statsFinal"></div>
+            <textarea id="outputFinal"></textarea>
+        </div>
+
+        <!-- UNION -->
+        <div class="section final">
+            <h3>🔥 Unión Parcial + Final</h3>
+            <button onclick="unir()"><i class="fa-solid fa-code-compare fa-lg" style="color: #ffffff;"></i> Unir y Eliminar Duplicados</button>
+            <button onclick="descargar('union')"><i class="fa-solid fa-download fa-lg" style="color: #ffffff;"></i> Descargar TXT Final</button>
+            <div class="stats" id="statsUnion"></div>
+            <textarea id="outputUnion"></textarea>
+        </div>
     </div>
 
-    <!-- FINAL -->
-    <div class="section">
-        <h3>📕 Examen Final</h3>
-        <input type="file" id="fileFinal" accept=".txt"><br>
-        <button onclick="procesar('final')">Procesar Final</button>
-        <button onclick="descargar('final')">Descargar Final</button>
-        <div class="stats" id="statsFinal"></div>
-        <textarea id="outputFinal"></textarea>
-    </div>
+    <script>
+        const data = {
+            parcial: "",
+            final: "",
+            union: ""
+        };
 
-    <!-- UNION -->
-    <div class="section final">
-        <h3>🔥 Unión Parcial + Final</h3>
-        <button onclick="unir()">Unir y Eliminar Duplicados</button>
-        <button onclick="descargar('union')">Descargar TXT Final</button>
-        <div class="stats" id="statsUnion"></div>
-        <textarea id="outputUnion"></textarea>
-    </div>
-</div>
+        function procesar(tipo) {
+            const input = document.getElementById(
+                tipo === "parcial" ? "fileParcial" : "fileFinal"
+            );
 
-<script>
-const data = {
-    parcial: "",
-    final: "",
-    union: ""
-};
+            if (!input.files.length) {
+                alert("Seleccione un archivo TXT");
+                return;
+            }
 
-function procesar(tipo) {
-    const input = document.getElementById(
-        tipo === "parcial" ? "fileParcial" : "fileFinal"
-    );
+            const reader = new FileReader();
+            reader.onload = e => {
+                const resultado = eliminarDuplicadosNormalizados(e.target.result);
+                data[tipo] = resultado.texto;
 
-    if (!input.files.length) {
-        alert("Seleccione un archivo TXT");
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = e => {
-        const resultado = eliminarDuplicadosNormalizados(e.target.result);
-        data[tipo] = resultado.texto;
-
-        document.getElementById("output" + cap(tipo)).value = resultado.texto;
-        document.getElementById("stats" + cap(tipo)).innerText =
-            `Originales: ${resultado.original} | Únicas: ${resultado.unicas} | Eliminadas: ${resultado.eliminadas}`;
-    };
-    reader.readAsText(input.files[0], "UTF-8");
-}
-
-function unir() {
-    if (!data.parcial || !data.final) {
-        alert("Procese ambos archivos primero");
-        return;
-    }
-
-    const combinado = data.parcial + "\n\n" + data.final;
-    const resultado = eliminarDuplicadosNormalizados(combinado);
-    data.union = resultado.texto;
-
-    document.getElementById("outputUnion").value = resultado.texto;
-    document.getElementById("statsUnion").innerText =
-        `Originales: ${resultado.original} | Únicas: ${resultado.unicas} | Eliminadas: ${resultado.eliminadas}`;
-}
-
-function eliminarDuplicadosNormalizados(texto) {
-    const bloques = texto.split(/\n\s*\n/);
-    const claves = new Set();
-    const unicos = [];
-
-    bloques.forEach(bloque => {
-        const lineas = bloque.trim().split("\n");
-        if (lineas.length < 2) return;
-
-        const enunciado = normalizar(lineas[0]);
-
-        const opciones = lineas
-            .filter(l => /^[A-Z]\./i.test(l))
-            .map(l => normalizar(l))
-            .join("");
-
-        const clave = enunciado + opciones;
-
-        if (!claves.has(clave)) {
-            claves.add(clave);
-            unicos.push(bloque.trim());
+                document.getElementById("output" + cap(tipo)).value = resultado.texto;
+                document.getElementById("stats" + cap(tipo)).innerText =
+                    `Originales: ${resultado.original} | Únicas: ${resultado.unicas} | Eliminadas: ${resultado.eliminadas}`;
+            };
+            reader.readAsText(input.files[0], "UTF-8");
         }
-    });
 
-    return {
-        texto: unicos.join("\n\n"),
-        original: bloques.length,
-        unicas: unicos.length,
-        eliminadas: bloques.length - unicos.length
-    };
-}
+        function unir() {
+            if (!data.parcial || !data.final) {
+                alert("Procese ambos archivos primero");
+                return;
+            }
 
-function normalizar(texto) {
-    return texto
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[¿?¡!.,:;]/g, "")
-        .replace(/\s+/g, "");
-}
+            const combinado = data.parcial + "\n\n" + data.final;
+            const resultado = eliminarDuplicadosNormalizados(combinado);
+            data.union = resultado.texto;
 
-function descargar(tipo) {
-    if (!data[tipo]) {
-        alert("No hay contenido para descargar");
-        return;
-    }
+            document.getElementById("outputUnion").value = resultado.texto;
+            document.getElementById("statsUnion").innerText =
+                `Originales: ${resultado.original} | Únicas: ${resultado.unicas} | Eliminadas: ${resultado.eliminadas}`;
+        }
 
-    const blob = new Blob([data[tipo]], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
+        function eliminarDuplicadosNormalizados(texto) {
+            const bloques = texto.split(/\n\s*\n/);
+            const claves = new Set();
+            const unicos = [];
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `aiken_${tipo}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-}
+            bloques.forEach(bloque => {
+                const lineas = bloque.trim().split("\n");
+                if (lineas.length < 2) return;
 
-function cap(t) {
-    return t.charAt(0).toUpperCase() + t.slice(1);
-}
-</script>
+                const enunciado = normalizar(lineas[0]);
 
+                const opciones = lineas
+                    .filter(l => /^[A-Z]\./i.test(l))
+                    .map(l => normalizar(l))
+                    .join("");
+
+                const clave = enunciado + opciones;
+
+                if (!claves.has(clave)) {
+                    claves.add(clave);
+                    unicos.push(bloque.trim());
+                }
+            });
+
+            return {
+                texto: unicos.join("\n\n"),
+                original: bloques.length,
+                unicas: unicos.length,
+                eliminadas: bloques.length - unicos.length
+            };
+        }
+
+        function normalizar(texto) {
+            return texto
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/[¿?¡!.,:;]/g, "")
+                .replace(/\s+/g, "");
+        }
+
+        function descargar(tipo) {
+            if (!data[tipo]) {
+                alert("No hay contenido para descargar");
+                return;
+            }
+
+            const blob = new Blob([data[tipo]], { type: "text/plain;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `aiken_${tipo}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        function cap(t) {
+            return t.charAt(0).toUpperCase() + t.slice(1);
+        }
+    </script>
 </body>
+
 </html>
